@@ -14,7 +14,9 @@ const int MIN_KOEF = -1000;
 class Polinom {
   public:
     Polinom(int);
+    Polinom(int, bool);
     Polinom(const Polinom&);
+    Polinom(const Polinom&, int, int);
     ~Polinom();
     Polinom& operator=(const Polinom&);
 
@@ -22,10 +24,11 @@ class Polinom {
     int getDerajat() const;
     void setKoefAt(int idx, int val);
     void setDerajat(int);
-    
-    // Mencetak seluruh koefisien polinom. Untuk setiap koefisien akhiri dengan end-of-line
-    // Cetaklah apa adanya dari koefisien ke-0 hingga derajat tertinggi (termasuk apabila koefisien = 0)
-    void printKoef();
+
+    Polinom multiplicationBruteForce(Polinom P1, Polinom P2);
+    Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2);
+
+    // virtual Polinom operator*(Polinom const&) {};
 
     // Mencetak polinom dengan format: A+Bx^1+Cx^2+Dx^3...dst (diakhiri dengan end-of-line)
     // Jika seluruh koefisien bernilai 0, keluarkan "0"
