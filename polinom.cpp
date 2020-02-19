@@ -11,36 +11,38 @@ using namespace std;
 bool Polinom::seeded = false;
 
 Polinom::Polinom(int n) {
+    int length = n+1; // length array = derajat + 1
     if (!seeded) {
         srand(time(NULL)); 
         seeded = true;
     }
     
     int powerOfTwo = 1;
-    while (powerOfTwo < n) {
-        powerOfTwo *= 2;    
+    while (powerOfTwo < length) {
+        powerOfTwo *= 2;
     }
-    bool isPowerOfTwo = (powerOfTwo == n);
+    bool isPowerOfTwo = (powerOfTwo == length);
     
     koefisien = new int[powerOfTwo];
-    for (int i = 0; i <= n; i++) {
+    for (int i = 0; i < length; i++) {
         koefisien[i] = rand() % (MAX_KOEF-MIN_KOEF + 1) + MIN_KOEF;
     }
     
     if (!isPowerOfTwo) {
-        for (int i = n+1; i <= powerOfTwo; i++) {
+        for (int i = length; i <= powerOfTwo; i++) {
             koefisien[i] = 0;
         }
     }
-    derajat = powerOfTwo;
+    derajat = powerOfTwo-1;
 }
 
 Polinom::Polinom(int n, bool isZero) {
+    int length = n+1;
     int powerOfTwo = 1;
-    while (powerOfTwo < n) {
+    while (powerOfTwo < length) {
         powerOfTwo *= 2;    
     }
-    bool isPowerOfTwo = (powerOfTwo == n);
+    bool isPowerOfTwo = (powerOfTwo == length);
     
     koefisien = new int[powerOfTwo];
 
@@ -53,17 +55,17 @@ Polinom::Polinom(int n, bool isZero) {
             srand(time(NULL)); 
             seeded = true;
         }
-        for (int i = 0; i <= n; i++) {
+        for (int i = 0; i < length; i++) {
             koefisien[i] = rand() % (MAX_KOEF-MIN_KOEF + 1) + MIN_KOEF;
         }
         if (!isPowerOfTwo) {
-           for (int i = n+1; i <= powerOfTwo; i++) {
+           for (int i = length; i <= powerOfTwo; i++) {
                 koefisien[i] = 0;
             }
         }
     }
     
-    derajat = powerOfTwo;
+    derajat = powerOfTwo-1;
 }
 
 Polinom::Polinom(const Polinom& pol, int idxLow, int idxHigh) {
@@ -181,29 +183,37 @@ Polinom Polinom::multiplicationDivideAndConquer(Polinom P1, Polinom P2) {
         // cout << "P2Low: "; P2Low.print(); cout << endl;
         // cout << "==================" << endl;
         
-        Polinom P1P2Low = multiplicationDivideAndConquer(P1Low, P2Low);
-        Polinom P1LowP2High = multiplicationDivideAndConquer(P1Low, P2High);
-        Polinom P1HighP2Low = multiplicationDivideAndConquer(P1High, P2Low);
-        Polinom P1P2High = multiplicationDivideAndConquer(P1High, P2High);
+        // Polinom P1P2Low = multiplicationDivideAndConquer(P1Low, P2Low);
+        // Polinom P1LowP2High = multiplicationDivideAndConquer(P1Low, P2High);
+        // Polinom P1HighP2Low = multiplicationDivideAndConquer(P1High, P2Low);
+        // Polinom P1P2High = multiplicationDivideAndConquer(P1High, P2High);
 
-        Polinom result(P1.getDerajat()+P2.getDerajat(), true);
-        for (int i = 0; i < P1.getDerajat(); i++) {
-            result.koefisien[i] += P1P2Low.koefisien[i];
-            result.koefisien[i+idxMid] += P1LowP2High.koefisien[i] + P1HighP2Low.koefisien[i];
-            result.koefisien[i+(2*idxMid)] += P1P2High.koefisien[i];
-        }
-        // cout << "TESSSS" << endl; (P1Low + P1High).print();
-
-        // Polinom Y = multiplicationDivideAndConquer(P1Low+P1High, P2Low+P2High);
-        // Polinom U = multiplicationDivideAndConquer(P1Low, P2Low);
-        // Polinom Z = multiplicationDivideAndConquer(P1High, P2High);
-        
         // Polinom result(P1.getDerajat()+P2.getDerajat(), true);
         // for (int i = 0; i < P1.getDerajat(); i++) {
-        //     result.koefisien[i] += U.koefisien[i];
-        //     result.koefisien[i+idxMid] += (Y.koefisien[i] - U.koefisien[i] - Z.koefisien[i]);
-        //     result.koefisien[i+(2*idxMid)] += Z.koefisien[i];
+        //     result.koefisien[i] += P1P2Low.koefisien[i];
+        //     result.koefisien[i+idxMid] += P1LowP2High.koefisien[i] + P1HighP2Low.koefisien[i];
+        //     result.koefisien[i+(2*idxMid)] += P1P2High.koefisien[i];
         // }
+        // cout << "TESSSS" << endl; (P1Low + P1High).print();
+
+        // Polinom P1new = P1Low+P1High;
+        // Polinom P2new = P2Low+P2High;
+        // cout << "==================" << endl;
+        // cout << "P1High: "; P1High.print(); 
+        // cout << "P1Low: "; P1Low.print(); cout << endl;
+        // cout << P1Low.getDerajat() << " " << P2High.getDerajat() << endl;
+        // P1new.print();
+        // cout << "==================" << endl;
+        Polinom Y = multiplicationDivideAndConquer(P1Low+P1High, P2Low+P2High);
+        Polinom U = multiplicationDivideAndConquer(P1Low, P2Low);
+        Polinom Z = multiplicationDivideAndConquer(P1High, P2High);
+        
+        Polinom result(P1.getDerajat()+P2.getDerajat(), true);
+        for (int i = 0; i < P1.getDerajat(); i++) {
+            result.koefisien[i] += U.koefisien[i];
+            result.koefisien[i+idxMid] += (Y.koefisien[i] - U.koefisien[i] - Z.koefisien[i]);
+            result.koefisien[i+(2*idxMid)] += Z.koefisien[i];
+        }
 
         return result;
     }
