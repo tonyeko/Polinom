@@ -174,36 +174,7 @@ Polinom Polinom::multiplicationDivideAndConquer(Polinom P1, Polinom P2) {
         Polinom P1Low(P1, 0, idxMid-1);
         Polinom P2High(P2, idxMid, P2.getDerajat());
         Polinom P2Low(P2, 0, idxMid-1);
-        // cout << "==================" << endl;
-        // cout << "P1: "; P1.print(); cout << P1.getDerajat() <<  " " << P1Low.getDerajat() <<  " " << P1High.getDerajat() << endl;
-        // cout << "P1High: "; P1High.print();
-        // cout << "P1Low: "; P1Low.print(); cout << endl;
-        // cout << "P2: "; P2.print(); cout << P2.getDerajat() <<  " " << P2Low.getDerajat() <<  " " << P2High.getDerajat() << endl;
-        // cout << "P2High: "; P2High.print();
-        // cout << "P2Low: "; P2Low.print(); cout << endl;
-        // cout << "==================" << endl;
         
-        // Polinom P1P2Low = multiplicationDivideAndConquer(P1Low, P2Low);
-        // Polinom P1LowP2High = multiplicationDivideAndConquer(P1Low, P2High);
-        // Polinom P1HighP2Low = multiplicationDivideAndConquer(P1High, P2Low);
-        // Polinom P1P2High = multiplicationDivideAndConquer(P1High, P2High);
-
-        // Polinom result(P1.getDerajat()+P2.getDerajat(), true);
-        // for (int i = 0; i < P1.getDerajat(); i++) {
-        //     result.koefisien[i] += P1P2Low.koefisien[i];
-        //     result.koefisien[i+idxMid] += P1LowP2High.koefisien[i] + P1HighP2Low.koefisien[i];
-        //     result.koefisien[i+(2*idxMid)] += P1P2High.koefisien[i];
-        // }
-        // cout << "TESSSS" << endl; (P1Low + P1High).print();
-
-        // Polinom P1new = P1Low+P1High;
-        // Polinom P2new = P2Low+P2High;
-        // cout << "==================" << endl;
-        // cout << "P1High: "; P1High.print(); 
-        // cout << "P1Low: "; P1Low.print(); cout << endl;
-        // cout << P1Low.getDerajat() << " " << P2High.getDerajat() << endl;
-        // P1new.print();
-        // cout << "==================" << endl;
         Polinom Y = multiplicationDivideAndConquer(P1Low+P1High, P2Low+P2High);
         Polinom U = multiplicationDivideAndConquer(P1Low, P2Low);
         Polinom Z = multiplicationDivideAndConquer(P1High, P2High);

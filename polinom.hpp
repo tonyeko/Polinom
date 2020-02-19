@@ -2,9 +2,6 @@
 // Nama	: Tony Eko Yuwono
 // NIM	: 13518030
 
-#include <stdlib.h>     /* srand, rand */
-#include <time.h>       /* time */
-
 #ifndef POLINOM_HPP
 #define POLINOM_HPP
 
@@ -25,7 +22,7 @@ class Polinom {
     void setKoefAt(int idx, int val);
     void setDerajat(int);
 
-    friend Polinom operator+(const Polinom&, const Polinom&); // Penjumlahan 2 buah Polinom.
+    friend Polinom operator+(const Polinom&, const Polinom&);
 
     Polinom multiplicationBruteForce(Polinom P1, Polinom P2);
     Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2);
