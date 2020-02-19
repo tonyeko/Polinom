@@ -25,6 +25,8 @@ class Polinom {
     void setKoefAt(int idx, int val);
     void setDerajat(int);
 
+    friend Polinom operator+(const Polinom&, const Polinom&); // Penjumlahan 2 buah Polinom.
+
     Polinom multiplicationBruteForce(Polinom P1, Polinom P2);
     Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2);
 
