@@ -14,7 +14,7 @@ class Polinom {
     Polinom(int, bool);
     Polinom(const Polinom&);
     Polinom(const Polinom&, int, int);
-    ~Polinom();
+    virtual ~Polinom();
     Polinom& operator=(const Polinom&);
 
     int getKoefAt(int idx) const;
@@ -24,10 +24,8 @@ class Polinom {
 
     friend Polinom operator+(const Polinom&, const Polinom&);
 
-    Polinom multiplicationBruteForce(Polinom P1, Polinom P2);
-    Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2);
-
-    // virtual Polinom operator*(Polinom const&) {};
+    friend Polinom multiplicationBruteForce(Polinom P1, Polinom P2);
+    friend Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2);
 
     // Mencetak polinom dengan format: A+Bx^1+Cx^2+Dx^3...dst (diakhiri dengan end-of-line)
     // Jika seluruh koefisien bernilai 0, keluarkan "0"

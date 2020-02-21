@@ -23,7 +23,7 @@ Polinom::Polinom(int n) {
     }
     bool isPowerOfTwo = (powerOfTwo == length);
     
-    koefisien = new int[powerOfTwo];
+    koefisien = new int[powerOfTwo+1];
     for (int i = 0; i < length; i++) {
         koefisien[i] = rand() % (MAX_KOEF-MIN_KOEF + 1) + MIN_KOEF;
     }
@@ -44,7 +44,7 @@ Polinom::Polinom(int n, bool isZero) {
     }
     bool isPowerOfTwo = (powerOfTwo == length);
     
-    koefisien = new int[powerOfTwo];
+    koefisien = new int[powerOfTwo+1];
 
     if (isZero) {
         for (int i = 0; i <= powerOfTwo; i++) {
@@ -70,7 +70,7 @@ Polinom::Polinom(int n, bool isZero) {
 
 Polinom::Polinom(const Polinom& pol, int idxLow, int idxHigh) {
     this->derajat = idxHigh - idxLow;
-    koefisien = new int[this->derajat];
+    koefisien = new int[this->derajat+1];
     for (int i = 0; i <= this->derajat; i++) {
         this->koefisien[i] = pol.koefisien[idxLow+i];
     }
@@ -78,7 +78,7 @@ Polinom::Polinom(const Polinom& pol, int idxLow, int idxHigh) {
 
 Polinom::Polinom(const Polinom& pol) {
     this->derajat = pol.derajat;
-    koefisien = new int[this->derajat];
+    koefisien = new int[this->derajat+1];
     for (int i = 0; i <= this->derajat; i++) {
         this->koefisien[i] = pol.koefisien[i];
     }
@@ -89,7 +89,7 @@ Polinom::~Polinom() {
 }
 
 Polinom& Polinom::operator=(const Polinom& pol) {
-    koefisien = new int[pol.derajat];
+    koefisien = new int[pol.derajat+1];
     for (int i = 0; i <= pol.derajat; i++) {
         this->koefisien[i] = pol.koefisien[i];
     }
@@ -154,7 +154,7 @@ void Polinom::print() {
     cout << endl;
 }
 
-Polinom Polinom::multiplicationBruteForce(Polinom P1, Polinom P2) {
+Polinom multiplicationBruteForce(Polinom P1, Polinom P2) {
     Polinom result(P1.getDerajat()+P2.getDerajat(), true);
     for (int i = 0; i <= P1.getDerajat(); i++) {
         for (int j = 0; j <= P2.getDerajat(); j++) {
@@ -165,7 +165,7 @@ Polinom Polinom::multiplicationBruteForce(Polinom P1, Polinom P2) {
     return result;
 }
 
-Polinom Polinom::multiplicationDivideAndConquer(Polinom P1, Polinom P2) {
+Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2) {
     if (P1.getDerajat() == 0 || P2.getDerajat() == 0) {
         return multiplicationBruteForce(P1, P2);
     } else {

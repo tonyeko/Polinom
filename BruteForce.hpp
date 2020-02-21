@@ -6,9 +6,6 @@
 
 class BruteForce : public Polinom {
     public:
-        BruteForce(Polinom* P);
-        Polinom operator*(Polinom const&);
-    protected:
-        Polinom* P;
+        BruteForce(int);
+        Polinom multiplication(Polinom const&);
 };
-
