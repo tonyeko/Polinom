@@ -50,21 +50,7 @@ Polinom::Polinom(int n, bool isZero) {
         for (int i = 0; i <= powerOfTwo; i++) {
             koefisien[i] = 0;
         }
-    } else {
-        if (!seeded) {
-            srand(time(NULL)); 
-            seeded = true;
-        }
-        for (int i = 0; i < length; i++) {
-            koefisien[i] = rand() % (MAX_KOEF-MIN_KOEF + 1) + MIN_KOEF;
-        }
-        if (!isPowerOfTwo) {
-           for (int i = length; i <= powerOfTwo; i++) {
-                koefisien[i] = 0;
-            }
-        }
-    }
-    
+    } 
     derajat = powerOfTwo-1;
 }
 
@@ -130,14 +116,13 @@ void Polinom::print() {
         }
         for (int i = 1; i <= derajat; i++) {
             if (koefisien[i] < 0) {
-                if (koefisien[i] == -1) {
-                    cout << "-";
-                } else {
-                    cout << koefisien[i];
+                cout << " - ";
+                if (koefisien[i] != -1) {
+                    cout << -1*koefisien[i];
                 }
             } else if (koefisien[i] > 1) {
                 if ((i == 1 && koefisien[0] != 0) || i > 1) {
-                    cout << "+";
+                    cout << " + ";
                 }
                 cout << koefisien[i];
             }

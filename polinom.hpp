@@ -17,18 +17,10 @@ class Polinom {
     virtual ~Polinom();
     Polinom& operator=(const Polinom&);
 
-    int getKoefAt(int idx) const;
-    int getDerajat() const;
-    void setKoefAt(int idx, int val);
-    void setDerajat(int);
-
     friend Polinom operator+(const Polinom&, const Polinom&);
-
     friend Polinom multiplicationBruteForce(Polinom P1, Polinom P2);
     friend Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2);
 
-    // Mencetak polinom dengan format: A+Bx^1+Cx^2+Dx^3...dst (diakhiri dengan end-of-line)
-    // Jika seluruh koefisien bernilai 0, keluarkan "0"
     void print();
 
   protected:
@@ -36,6 +28,10 @@ class Polinom {
     int* koefisien;
     static bool seeded;
     
+    int getDerajat() const;
+    void setDerajat(int);
+    int getKoefAt(int idx) const;
+    void setKoefAt(int idx, int val);
 };
 
 #endif

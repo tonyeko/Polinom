@@ -21,21 +21,21 @@ int main() {
     int n;
     cout << "Masukkan derajat polinom: "; cin >> n;
 
-    Polinom P1(n);
-    Polinom P2(n);
-    cout << "Polinom P1: "; P1.print(); 
-    cout << "Polinom P2: "; P2.print();
+    Polinom A(n);
+    Polinom B(n);
+    cout << "Polinom A: "; A.print(); 
+    cout << "Polinom B: "; B.print();
 
-    auto startDnC = steady_clock::now(); 
-    Polinom result = multiplicationDivideAndConquer(P1, P2);
-    auto stopDnC = steady_clock::now(); 
-    auto durationDnC = duration_cast<microseconds>(stopDnC - startDnC); 
+    auto startDnC = high_resolution_clock::now(); 
+    Polinom result = multiplicationDivideAndConquer(A, B);
+    auto stopDnC = high_resolution_clock::now(); 
+    auto durationDnC = duration_cast<microseconds>(stopDnC - startDnC);
     cout << "Perkalian Divide and Conquer   : " << endl; 
     result.print();
     
-    auto startBF = steady_clock::now(); 
-    result = multiplicationBruteForce(P1, P2);
-    auto stopBF = steady_clock::now(); 
+    auto startBF = high_resolution_clock::now(); 
+    result = multiplicationBruteForce(A, B);
+    auto stopBF = high_resolution_clock::now(); 
     auto durationBF = duration_cast<microseconds>(stopBF - startBF); 
     cout << "Perkalian Brute Force          : " << endl; 
     result.print();
