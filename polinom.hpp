@@ -16,18 +16,16 @@ class Polinom {
     Polinom(const Polinom&, int, int);
     virtual ~Polinom();
     Polinom& operator=(const Polinom&);
-
     friend Polinom operator+(const Polinom&, const Polinom&);
+    friend Polinom operator*(const Polinom&, const Polinom&);  // overloading untuk brute force
+    friend Polinom operator*=(const Polinom&, const Polinom&); // overloading untuk divide and conquer
     friend Polinom multiplicationBruteForce(Polinom P1, Polinom P2);
     friend Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2);
-
     void print();
-
   protected:
     int derajat; // derajat tertinggi
     int* koefisien;
     static bool seeded;
-    
     int getDerajat() const;
     void setDerajat(int);
     int getKoefAt(int idx) const;

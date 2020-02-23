@@ -6,6 +6,8 @@
 #include <stdlib.h>     /* srand, rand */
 #include <time.h>       /* time */
 #include "Polinom.hpp"
+#include "bruteforce.hpp"
+#include "divideandconquer.hpp"
 using namespace std;
 
 bool Polinom::seeded = false;
@@ -104,7 +106,16 @@ Polinom operator+(const Polinom& p1, const Polinom& p2) {
     for (int i = 0; i <= out.getDerajat(); i++) {
         out.koefisien[i] = p1.koefisien[i] + p2.koefisien[i];
     }
+    cntTambahDnC+=out.getDerajat()+1;
     return out;
+}
+
+Polinom operator*(const Polinom& p1, const Polinom& p2) {
+    return multiplicationBruteForce(p1, p2);
+}
+
+Polinom operator*=(const Polinom& p1, const Polinom& p2) {
+    return multiplicationDivideAndConquer(p1, p2);
 }
 
 void Polinom::print() {
@@ -137,40 +148,4 @@ void Polinom::print() {
         
     }
     cout << endl;
-}
-
-Polinom multiplicationBruteForce(Polinom P1, Polinom P2) {
-    Polinom result(P1.getDerajat()+P2.getDerajat(), true);
-    for (int i = 0; i <= P1.getDerajat(); i++) {
-        for (int j = 0; j <= P2.getDerajat(); j++) {
-            int newKoef = result.getKoefAt(i+j) + P1.getKoefAt(i) * P2.getKoefAt(j);
-            result.setKoefAt(i+j, newKoef);
-        }
-    }
-    return result;
-}
-
-Polinom multiplicationDivideAndConquer(Polinom P1, Polinom P2) {
-    if (P1.getDerajat() == 0 || P2.getDerajat() == 0) {
-        return multiplicationBruteForce(P1, P2);
-    } else {
-        int idxMid = (P1.getDerajat()+1)/2;
-        Polinom P1High(P1, idxMid, P1.getDerajat());
-        Polinom P1Low(P1, 0, idxMid-1);
-        Polinom P2High(P2, idxMid, P2.getDerajat());
-        Polinom P2Low(P2, 0, idxMid-1);
-        
-        Polinom Y = multiplicationDivideAndConquer(P1Low+P1High, P2Low+P2High);
-        Polinom U = multiplicationDivideAndConquer(P1Low, P2Low);
-        Polinom Z = multiplicationDivideAndConquer(P1High, P2High);
-        
-        Polinom result(P1.getDerajat()+P2.getDerajat(), true);
-        for (int i = 0; i < P1.getDerajat(); i++) {
-            result.koefisien[i] += U.koefisien[i];
-            result.koefisien[i+idxMid] += (Y.koefisien[i] - U.koefisien[i] - Z.koefisien[i]);
-            result.koefisien[i+(2*idxMid)] += Z.koefisien[i];
-        }
-
-        return result;
-    }
 }
